@@ -11,33 +11,35 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <build>
       <plugins>
         <plugin>
-          <groupId>com.github.goldin</groupId>
-          <artifactId>properties-maven-plugin</artifactId>
-          <version>0.2.5</version>
+          <groupId>org.codehaus.groovy.maven</groupId>
+          <artifactId>gmaven-plugin</artifactId>
+          <version>1.0</version>
           <executions>
             <execution>
-              <id>set-properties</id>
+              <id>set-timestamp</id>
               <phase>validate</phase>
               <goals>
-                <goal>set-properties</goal>
+                <goal>execute</goal>
               </goals>
               <configuration>
-                <properties>
-                  <property>
-                    <name>groovyBuildQualifier</name>
-                    <value>{{import java.text.SimpleDateFormat; new
-                      <!-- We have to copy the Elexis.product, as we cannot build a plug-in
-                      and a target inside the same Maven project (or at least don't know howto)
-                      Under Linux a symbolic link would suffice. But this did not work under Windows -->
-                      <!-- for snapshot we want an 'a' << 'b' (beta) << 'r' (prerelease and release) -->
-                      SimpleDateFormat("'"+repo_variant.substring(0,1).replaceFirst('s','a').replaceFirst('p','r')+"'yyyyMMdd-HHmm").format(Calendar.getInstance().getTime())
-                        }}</value>
-                      </property>
-                    </properties>
-                  </configuration>
-                </execution>
-              </executions>
-            </plugin>
+                <source>
+                  import java.text.SimpleDateFormat;
+                  if (System.getProperty("repo_variant") == null) {
+                    repo_variant ='snapshot';
+                  } else {
+                    repo_variant = System.getProperty("repo_variant");
+                  }
+                  res = new SimpleDateFormat("'"+repo_variant.substring(0,1).replaceFirst('s','a').replaceFirst('p','r')+"'yyyyMMdd-HHmm").format(Calendar.getInstance().getTime())
+                  println 'groovyBuildQualifier fuer ' + repo_variant + ' ist ' + res;
+                  <!-- println 'groovyBuildQualifier was ' + project.properties.getProperty('groovyBuildQualifier');
+                  System.setProperty("groovyBuildQualifier",res); -->
+                  project.properties.setProperty('groovyBuildQualifier', res)
+                  <!-- println 'groovyBuildQualifier neu ' + project.properties.getProperty('groovyBuildQualifier');-->
+                </source>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
           <plugin>
            <groupId>com.google.code.maven-replacer-plugin</groupId>
            <artifactId>replacer</artifactId>
