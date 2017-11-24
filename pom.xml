@@ -3,114 +3,34 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ch.elexis.gpl</groupId>
   <artifactId>elexis-3-gpl</artifactId>
-  <version>3.0.0-SNAPSHOT</version>
+  <version>3.4.0-SNAPSHOT</version>
   <properties>
-    <tycho-version>0.25.0</tycho-version>
+    <tycho-version>1.0.0</tycho-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tycho-extras.version>${tycho-version}</tycho-extras.version>
     <juno-repo.url>http://download.eclipse.org/releases/juno</juno-repo.url>
     <tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
     <repo_name>elexis.3.gpl</repo_name>
-    <repo_variant>snapshot</repo_variant>
-    <useBranch>master</useBranch>
-    <timestamp_format>'a'yyyyMMdd-HHmm</timestamp_format>
-    <!-- timestamp_format has the following convention for consistent updates
-         with 'a' (alpha) for master/snapshot, 'b' for beta', 'p' for prerelease and 'r' for release
-    -->
-    <nonElexisP2variant>snapshot</nonElexisP2variant>
+    <git.core.branch>master</git.core.branch>
+    <git.target.branch>master</git.target.branch>
+    <nonElexisP2variant>master</nonElexisP2variant>
     <ROOT>${project.basedir}/compositeRepository</ROOT>
   </properties>
   <packaging>pom</packaging>
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-model</artifactId>
-      <version>2.2.0</version>
-    </dependency>
-  </dependencies>
-	<profiles>
-    <profile>
-      <id>prerelease</id>
-      <activation>
-        <property>
-          <name>repo_variant</name>
-          <value>prerelease</value>
-        </property>
-      </activation>
-      <properties>
-        <timestamp_format>'p'yyyyMMdd-HHmm</timestamp_format>
-        <nonElexisP2variant>prerelease</nonElexisP2variant>
-        <useBranch>release</useBranch>
-      </properties>
-    </profile>
-    <profile>
-      <id>beta</id>
-      <activation>
-        <property>
-          <name>repo_variant</name>
-          <value>beta</value>
-        </property>
-      </activation>
-      <properties>
-        <timestamp_format>'b'yyyyMMdd-HHmm</timestamp_format>
-        <nonElexisP2variant>beta</nonElexisP2variant>
-        <useBranch>master</useBranch>
-      </properties>
-    </profile>
-		<profile>
-			<id>release</id>
-			<activation>
-				<property>
-					<name>repo_variant</name>
-					<value>release</value>
-				</property>
-			</activation>
-			<properties>
-        <timestamp_format>'r'yyyyMMdd-HHmm</timestamp_format>
-				<nonElexisP2variant>release</nonElexisP2variant>
-				<useBranch>release</useBranch>
-			</properties>
-		</profile>
-		<!-- activate operating system dependent testing vm args -->
-		<profile>
-			<id>mac-surefire-tests</id>
-			<activation>
-				<os><family>mac</family></os>
-			</activation>
-			<properties> <!-- Do not linebreak! https://bugs.eclipse.org/bugs/show_bug.cgi?id=427693 -->
-				<elexis.ui.test.vmargs>-DjdbcLink=org.h2.Driver:mem:mem_test;AUTO_SERVER=TRUE -Dch.elexis.username=007 -Dch.elexis.password=topsecret -Delexis-run-mode=RunFromScratch -XstartOnFirstThread</elexis.ui.test.vmargs>
-			</properties>
-		</profile>
-		<profile>
-			<id>non-mac-surefire-tests</id>
-			<activation>
-				<os><family>!mac</family></os>
-			</activation>
-			<properties> <!-- Do not linebreak! https://bugs.eclipse.org/bugs/show_bug.cgi?id=427693 -->
-				<elexis.ui.test.vmargs>-DjdbcLink=org.h2.Driver:mem:mem_test;AUTO_SERVER=TRUE -Dch.elexis.username=007 -Dch.elexis.password=topsecret -Delexis-run-mode=RunFromScratch</elexis.ui.test.vmargs>
-			</properties>
-		</profile>
-		<!-- activate operating system dependent testing vm args -->
-	</profiles>
-<modules>
+  <modules>
   <module>com.jsigle.noatext_jsl</module>
   <module>com.jsigle.noatext_jsl.feature</module>
   <module>ch.elexis.gpl.p2site</module>
 </modules>
 <repositories>
   <repository>
-    <id>elexis.3.core.${repo_variant}</id>
-    <url>http://download.elexis.info/elexis.3.core/${repo_variant}/</url>
+    <id>elexis.3.target</id>
+    <url>http://download.elexis.info/elexis/${git.target.branch}/p2/target</url>
     <layout>p2</layout>
   </repository>
-  <repository>
-    <id>mirror.4.elexis.${repo_variant}</id>
-    <url>http://download.elexis.info/mirror.4.elexis/${nonElexisP2variant}/</url>
-    <layout>p2</layout>
-  </repository>
-  <repository>
-    <id>elexis.3.3rdparty.libraries</id>
-    <url>http://download.elexis.info/elexis.3.3rdparty.libraries/${nonElexisP2variant}</url>
+   <repository>
+    <id>elexis.3.core</id>
+    <url>http://download.elexis.info/elexis/${git.core.branch}/p2/elexis-3-core</url>
     <layout>p2</layout>
   </repository>
 </repositories>
@@ -177,6 +97,20 @@
       <groupId>org.eclipse.tycho</groupId>
       <artifactId>target-platform-configuration</artifactId>
       <configuration>
+        <dependency-resolution>
+          <extraRequirements>
+              <requirement>
+                <type>eclipse-plugin</type>
+                <id>javax.servlet</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+              <requirement>
+                <type>eclipse-plugin</type>
+                <id>javax.xml</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+          </extraRequirements>
+        </dependency-resolution>
         <environments>
           <environment>
             <os>linux</os>
@@ -293,7 +227,7 @@ Without it Maven would put two versions of each class file into the jars
         </dependencies>
         <configuration>
           <strictBinIncludes>false</strictBinIncludes>
-          <format>${timestamp_format}</format>
+          <format>yyyyMMdd-HHmm</format>
           <timestampProvider>jgit</timestampProvider>
           <jgit.ignore>pom.xml</jgit.ignore>
           <jgit.dirtyWorkingTree>warning</jgit.dirtyWorkingTree>
