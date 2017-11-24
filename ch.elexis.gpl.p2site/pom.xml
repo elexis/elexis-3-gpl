@@ -7,6 +7,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <version>3.4.0-SNAPSHOT</version>
   </parent>
   <artifactId>ch.elexis.gpl.p2site</artifactId>
+  <version>3.0.0-SNAPSHOT</version>
   <packaging>eclipse-repository</packaging>
     <build>
       <plugins>
