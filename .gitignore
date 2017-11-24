@@ -1,5 +1,5 @@
 *.class
-
+ch.elexis.gpl.p2site/repo.properties
 # Package Files #
 # *.jar
 *.war
