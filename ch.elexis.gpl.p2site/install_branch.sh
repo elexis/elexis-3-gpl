@@ -28,7 +28,7 @@ then
   exit 1
 fi
 
-TARGETDIRECTORY=${P2_ROOT}/${PROJECT_BRANCH}/${PROJECT_NAME}
+TARGETDIRECTORY=${P2_ROOT}/${PROJECT_BRANCH}/p2/${PROJECT_NAME}
 mkdir -p $TARGETDIRECTORY
 
 # Maven must have prepared a repo.properties file under ch.medelexis.p2site
