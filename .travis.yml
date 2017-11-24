@@ -1,9 +1,9 @@
 ---
 language: java
 
-install: mvn  -V -DskipTests=true -Dmaven.javadoc.skip=true -B validate
+install: mvn  -V -DskipTests=true -Dmaven.javadoc.skip=true  -Dtycho.localArtifacts=ignore -B validate
 
-script: mvn  -V --quiet clean verify -Dtycho.localArtifacts=ignore && find . -name "*.zip"
+script: mvn  -V --quiet clean verify -Dtycho.localArtifacts=ignore && find . -name "*2site*.zip"
   
 notifications:
   email:
