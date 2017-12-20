@@ -6,6 +6,12 @@
    <feature url="features/com.jsigle.noatext_jsl.feature_3.0.0.qualifier.jar" id="com.jsigle.noatext_jsl.feature" version="3.0.0.qualifier">
       <category name="sources"/>
    </feature>
+   <feature url="features/com.jsigle.msword_js.feature.source_3.0.0.qualifier.jar" id="com.jsigle.msword_js.feature.source" version="3.0.0.qualifier">
+      <category name="documentmanagement"/>
+   </feature>
+   <feature url="features/com.jsigle.msword_js.feature_3.0.0.qualifier.jar" id="com.jsigle.msword_js.feature" version="3.0.0.qualifier">
+      <category name="sources"/>
+   </feature>
    <category-def name="documentmanagement" label="Dokumentenverwaltung">
       <description>
          Elexis bietet verschiedene Plug-Ins zur Anbindung an eine Textverarbeitung an. Hinweise zur Auswahl finden Sie unter http://wiki.elexis.info/Auswahl.Text_Plugins.

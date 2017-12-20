@@ -20,6 +20,8 @@
   <modules>
   <module>com.jsigle.noatext_jsl</module>
   <module>com.jsigle.noatext_jsl.feature</module>
+  <module>com.jsigle.msword_js</module>
+  <module>com.jsigle.msword_js.feature</module>
   <module>ch.elexis.gpl.p2site</module>
 </modules>
 <repositories>
