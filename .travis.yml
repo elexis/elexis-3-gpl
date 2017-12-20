@@ -1,0 +1,16 @@
+---
+language: java
+
+install: mvn --show-version --batch-mode -Dtycho.localArtifacts=ignore clean
+
+script:  mvn --show-version --batch-mode -Dtycho.localArtifacts=ignore clean verify && find . -name "*2site*.zip"
+  
+notifications:
+  email:
+  - niklaus.giger@member.fsf.org
+jdk:
+  - oraclejdk8
+
+cache:
+  directories:
+  - $HOME/.m2
