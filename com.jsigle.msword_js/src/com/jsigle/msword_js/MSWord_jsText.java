@@ -189,7 +189,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.jdom.Parent;
 import org.osgi.framework.Bundle;
 
 import ag.ion.bion.officelayer.application.IOfficeApplication;
@@ -247,20 +246,14 @@ import com.jsigle.msword_js.MSWord_jsPrinter.MyXPrintJobListener;
 import com.jsigle.msword_js.MSWord_jsText;
 import com.jsigle.msword_js.MSWord_jsText.closeListener;
 
-import ch.elexis.Hub;
-import ch.elexis.preferences.PreferenceConstants;
-import ch.elexis.text.ITextPlugin;
-import ch.elexis.text.ReplaceCallback;
-import ch.elexis.text.ITextPlugin.ICallback;
-import ch.elexis.text.ITextPlugin.PageFormat;
-import ch.elexis.util.Log;
-import ch.elexis.util.SWTHelper;
+import ch.elexis.core.ui.text.ITextPlugin;
+import ch.elexis.core.ui.util.SWTHelper;
 import ch.rgw.io.FileTool;
 import ch.rgw.tools.ExHandler;
+import ch.rgw.tools.Log;
 import ch.rgw.tools.StringTool;
 import ch.rgw.tools.TimeTool;
-
-
+import ch.elexis.core.data.interfaces.text.ReplaceCallback;
 /**
  * Submitted to the Jacob SourceForge web site as a sample 3/2005
  * <p>
@@ -2359,18 +2352,32 @@ END OF TESTCODE FOR INSERTING TEXTFRAME SHAPES*/
 		public NOAText(){
 			System.out.println("NOAText msword_js: NOAText msword_js: noa loaded");
 			System.out.println("NOAText msword_js: NOAText msword_js: computing defaultbase...");
+<<<<<<< Updated upstream
 			File base = new File(Hub.getBasePath());
 			File fDef = new File(base.getParentFile().getParent() + "/ooo");
 			System.out.println("NOAText msword_js: NOAText msword_js: Hub.getBasePath():"+Hub.getBasePath());
+=======
+			File base = new File(CoreHub.getBasePath());
+			File fDef = new File(base.getParentFile().getParent() + "/ooo");
+			System.out.println("NOAText msword_js: NOAText msword_js: CoreHub.getBasePath():"+CoreHub.getBasePath());
+>>>>>>> Stashed changes
 			System.out.println("NOAText msword_js: NOAText msword_js: base.getParentFile().getParent() + \"/ooo\":"+base.getParentFile().getParent() + "/ooo");
 			String defaultbase;
 			if (fDef.exists()) {
 				defaultbase = fDef.getAbsolutePath();
+<<<<<<< Updated upstream
 				//Hub.localCfg.set(PreferenceConstants.P_OOBASEDIR, defaultbase);   //20160921js
 				Hub.localCfg.set(PreferenceConstants.P_MSWORDBASEDIR, defaultbase);
 			} else {
 				//defaultbase = Hub.localCfg.get(PreferenceConstants.P_OOBASEDIR, ".");
 				defaultbase = Hub.localCfg.get(PreferenceConstants.P_MSWORDBASEDIR, ".");
+=======
+				//CoreHub.localCfg.set(PreferenceConstants.P_OOBASEDIR, defaultbase);   //20160921js
+				CoreHub.localCfg.set(PreferenceConstants.P_MSWORDBASEDIR, defaultbase);
+			} else {
+				//defaultbase = CoreHub.localCfg.get(PreferenceConstants.P_OOBASEDIR, ".");
+				defaultbase = CoreHub.localCfg.get(PreferenceConstants.P_MSWORDBASEDIR, ".");
+>>>>>>> Stashed changes
 			}
 			System.out.println("NOAText msword_js: NOAText msword_js: computed defaultbase=openoffice.path.name:"+defaultbase);
 			System.setProperty("openoffice.path.name", defaultbase);
@@ -7580,4 +7587,16 @@ COMMENTED OUT */
 		return false;
 	}
 
+	@Override
+	public void setParameter(Parameter parameter) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void initTemplatePrintSettings(String template) {
+		// TODO Auto-generated method stub
+		
+	}
 }

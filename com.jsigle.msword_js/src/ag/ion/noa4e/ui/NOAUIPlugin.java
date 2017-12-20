@@ -62,9 +62,9 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import ch.elexis.Hub;
-import ch.elexis.preferences.PreferenceConstants;
-import ch.elexis.preferences.SettingsPreferenceStore;
+import ch.elexis.core.constants.Preferences;
+import ch.elexis.core.data.activator.CoreHub;
+import ch.elexis.core.ui.preferences.SettingsPreferenceStore;
 
 import ag.ion.bion.officelayer.application.ILazyApplicationInfo;
 import ag.ion.bion.officelayer.application.IOfficeApplication;
@@ -88,7 +88,7 @@ public class NOAUIPlugin extends AbstractUIPlugin {
 
   /** Preferences key of the office home path. 
    * This is not used in the adoption for Elexis by js following adoptions by GW - 20120221js
-   * We'll use entries in ...(Hub.localCfg) instead.
+   * We'll use entries in ...(CoreHub.localCfg) instead.
    * I comment out the definition so I can automatically see an error anywhere in the code
    * where it is still in use and probably needs to be replaced.
    * public static final String  PREFERENCE_OFFICE_HOME         = "localOfficeApplicationPreferences.applicationPath";
@@ -96,7 +96,7 @@ public class NOAUIPlugin extends AbstractUIPlugin {
   
   /** Preferences key of the prevent office termination information.
    * This is not used in the adoption for Elexis by js following adoptions by GW - 20120221js
-   *  We'll use entries in ...(Hub.localCfg) instead.
+   *  We'll use entries in ...(CoreHub.localCfg) instead.
    * I comment out the definition so I can automatically see an error anywhere in the code
    * where it is still in use and probably needs to be replaced.
    * public static final String  PREFERENCE_PREVENT_TERMINATION = "localOfficeApplicationPreferences.preventTermintation";
@@ -264,7 +264,7 @@ public class NOAUIPlugin extends AbstractUIPlugin {
     	    //My warning in the following line referred to the original noa4e code:
     	    //System.out.println("NOAUIPlugin: internalStartApplication(): getting officeHome (WARNING: probably from the wrong source)...");
     	    System.out.println("NOAUIPlugin: internalStartApplication(): getting officeHome...");
-    	    System.out.println("NOAUIPlugin: Using js mod adopted for Elexis, following prior GW adoptions, P_OOBASEDIR via ...(Hub.localCfg)");
+    	    System.out.println("NOAUIPlugin: Using js mod adopted for Elexis, following prior GW adoptions, P_OOBASEDIR via ...(CoreHub.localCfg)");
 
     	    //JS modified this:
     	    //The original code tries to access a preference store which is not used in Elexis,
@@ -272,8 +272,8 @@ public class NOAUIPlugin extends AbstractUIPlugin {
     	    //Unsuitable original line, removed:
     	    //String officeHome = getDefault().getPreferenceStore().getString(PREFERENCE_OFFICE_HOME);
     	    //Newly inserted lines:
-    	    IPreferenceStore preferenceStore = new SettingsPreferenceStore(Hub.localCfg);
-    	    String officeHome = preferenceStore.getString(PreferenceConstants.P_OOBASEDIR);
+    	    IPreferenceStore preferenceStore = new SettingsPreferenceStore(CoreHub.localCfg);
+    	    String officeHome = preferenceStore.getString(Preferences.P_OOBASEDIR);
     	  
     	System.out.println("NOAUIPlugin: startLocalOfficeApplication(): trying to get preventTermination setting...");
 
@@ -286,7 +286,7 @@ public class NOAUIPlugin extends AbstractUIPlugin {
 	    //Unsuitable original line, removed:
     	//boolean preventTermination = getDefault().getPreferenceStore().getBoolean(PREFERENCE_PREVENT_TERMINATION);
         //Newly inserted lines:
-	    //Already declared further above: IPreferenceStore preferenceStore = new SettingsPreferenceStore(Hub.localCfg);
+	    //Already declared further above: IPreferenceStore preferenceStore = new SettingsPreferenceStore(CoreHub.localCfg);
     	boolean preventTermination=preferenceStore.getBoolean(PREFS_PREVENT_TERMINATION);
     	
         System.out.println("NOAUIPlugin: startLocalOfficeApplication(): got preventTermination setting="+preventTermination);
@@ -349,7 +349,7 @@ public class NOAUIPlugin extends AbstractUIPlugin {
     //My warning in the following line referred to the original noa4e code:
     //System.out.println("NOAUIPlugin: internalStartApplication(): getting officeHome (WARNING: probably from the wrong source)...");
     System.out.println("NOAUIPlugin: internalStartApplication(): getting officeHome...");
-    System.out.println("NOAUIPlugin: Using js mod adopted for Elexis, following prior GW adoptions, P_OOBASEDIR via ...(Hub.localCfg)");
+    System.out.println("NOAUIPlugin: Using js mod adopted for Elexis, following prior GW adoptions, P_OOBASEDIR via ...(CoreHub.localCfg)");
 
     //JS modified this:
     //The original code tries to access a preference store which is not used in Elexis,
@@ -357,8 +357,8 @@ public class NOAUIPlugin extends AbstractUIPlugin {
     //Unsuitable original line, removed:
     //String officeHome = getDefault().getPreferenceStore().getString(PREFERENCE_OFFICE_HOME);
     //Newly inserted lines:
-    IPreferenceStore preferenceStore = new SettingsPreferenceStore(Hub.localCfg);
-    String officeHome = preferenceStore.getString(PreferenceConstants.P_OOBASEDIR);
+    IPreferenceStore preferenceStore = new SettingsPreferenceStore(CoreHub.localCfg);
+    String officeHome = preferenceStore.getString(Preferences.P_OOBASEDIR);
    
     System.out.println("NOAUIPlugin: internalStartApplication(): got officeHome.");
     if (officeHome==null)	System.out.println("NOAUIPlugin: internalStartApplication(): WARNING: officeHome==null");
@@ -427,7 +427,7 @@ public class NOAUIPlugin extends AbstractUIPlugin {
     if (configurationChanged) {
         System.out.println("NOAUIPlugin: internalStartApplication(): Configuration of PREFERENCE_OFFICE_HOME changed.");
         System.out.println("NOAUIPlugin: internalStartApplication(): Storing the new configuration.");
-        System.out.println("Using js mod adopted for Elexis, following prior GW adoptions, P_OOBASEDIR via ...(Hub.localCfg)");
+        System.out.println("Using js mod adopted for Elexis, following prior GW adoptions, P_OOBASEDIR via ...(CoreHub.localCfg)");
 
     	//JS modified this:
         //The original code tries to access a preference store which is not used in Elexis,
@@ -436,7 +436,7 @@ public class NOAUIPlugin extends AbstractUIPlugin {
     	//getDefault().getPluginPreferences().setValue(PREFERENCE_OFFICE_HOME,
     	//          configuration.get(IOfficeApplication.APPLICATION_HOME_KEY).toString());
     	//Newly inserted line:
-        preferenceStore.setValue(PreferenceConstants.P_OOBASEDIR, configuration.get(IOfficeApplication.APPLICATION_HOME_KEY).toString());
+        preferenceStore.setValue(Preferences.P_OOBASEDIR, configuration.get(IOfficeApplication.APPLICATION_HOME_KEY).toString());
     }
       
     return status;

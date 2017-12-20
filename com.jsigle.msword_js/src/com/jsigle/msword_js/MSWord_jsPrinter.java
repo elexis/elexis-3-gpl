@@ -16,7 +16,7 @@ package com.jsigle.msword_js;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 
-import ch.elexis.util.Log;
+import ch.rgw.tools.Log;
 import ch.rgw.tools.ExHandler;
 
 import com.sun.star.beans.XPropertySet;

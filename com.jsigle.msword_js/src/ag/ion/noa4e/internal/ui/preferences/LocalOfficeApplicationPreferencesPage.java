@@ -64,9 +64,9 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
-import ch.elexis.Hub;
-import ch.elexis.preferences.PreferenceConstants;
-import ch.elexis.preferences.SettingsPreferenceStore;
+import ch.elexis.core.constants.Preferences;
+import ch.elexis.core.data.activator.CoreHub;
+import ch.elexis.core.ui.preferences.SettingsPreferenceStore;
 
 import ag.ion.bion.officelayer.application.IApplicationAssistant;
 import ag.ion.bion.officelayer.application.IApplicationProperties;
@@ -241,18 +241,18 @@ public class LocalOfficeApplicationPreferencesPage extends PreferencePage implem
    */
   public boolean performOk() {
 	System.out.println("LOAPP: performOK - Adopted to Elexis by GW/JS");
-	System.out.println("LOAPP: allocating preferenceStore = new SettingsPreferenceStore(Hub.localCfg)");
+	System.out.println("LOAPP: allocating preferenceStore = new SettingsPreferenceStore(CoreHub.localCfg)");
 	System.out.println("LOAPP: instead of using = NOAUIPlugin.getDefault().getPreferenceStore()");
 	
-	IPreferenceStore preferenceStore = new SettingsPreferenceStore(Hub.localCfg);
+	IPreferenceStore preferenceStore = new SettingsPreferenceStore(CoreHub.localCfg);
     preferenceStore.setValue(PREFS_PREVENT_TERMINATION, buttonPreventTermination.getSelection());
    
 	//IPreferenceStore preferenceStore = NOAUIPlugin.getDefault().getPreferenceStore();
     //preferenceStore.setValue(NOAUIPlugin.PREFERENCE_PREVENT_TERMINATION,
     //    buttonPreventTermination.getSelection());
 
-    String oldPath = preferenceStore.getString(PreferenceConstants.P_OOBASEDIR);
-    preferenceStore.setValue(PreferenceConstants.P_OOBASEDIR, textHome.getText());
+    String oldPath = preferenceStore.getString(Preferences.P_OOBASEDIR);
+    preferenceStore.setValue(Preferences.P_OOBASEDIR, textHome.getText());
 
     //String oldPath = preferenceStore.getString(NOAUIPlugin.PREFERENCE_OFFICE_HOME);
     //preferenceStore.setValue(NOAUIPlugin.PREFERENCE_OFFICE_HOME, textHome.getText());
@@ -329,11 +329,11 @@ public class LocalOfficeApplicationPreferencesPage extends PreferencePage implem
    */
   private void initPreferenceValues() {
 	System.out.println("LOAPP: initPreferenceValues - adopted for Elexis by GW/JS");
-	System.out.println("LOAPP: allocating preferenceStore = new SettingsPreferenceStore(Hub.localCfg)");
+	System.out.println("LOAPP: allocating preferenceStore = new SettingsPreferenceStore(CoreHub.localCfg)");
 	System.out.println("LOAPP: instead of using = NOAUIPlugin.getDefault().getPreferenceStore()");
 	
-	IPreferenceStore preferenceStore=new SettingsPreferenceStore(Hub.localCfg);
-	String officeHomePath=preferenceStore.getString(PreferenceConstants.P_OOBASEDIR);
+	IPreferenceStore preferenceStore=new SettingsPreferenceStore(CoreHub.localCfg);
+	String officeHomePath=preferenceStore.getString(Preferences.P_OOBASEDIR);
 	boolean preventTermination=preferenceStore.getBoolean(PREFS_PREVENT_TERMINATION);
 	  
 	//IPreferenceStore preferenceStore = NOAUIPlugin.getDefault().getPreferenceStore();

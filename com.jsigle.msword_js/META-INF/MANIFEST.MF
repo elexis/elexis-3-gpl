@@ -6,12 +6,11 @@ Bundle-Version: 3.0.0.qualifier
 Bundle-Vendor: jsigle.com
 Bundle-Localization: plugin
 Require-Bundle: ch.elexis.core.ui;bundle-version="3.1.0",
- ch.elexis.core;bundle-version="3.4.0",
- ch.elexis.core.data;bundle-version="3.4.0",
  org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.ui.forms,
- ch.rgw.utility
+ ch.rgw.utility,
+ ch.elexis.core.data
 Bundle-ClassPath: .,
  lib/java_uno_accessbridge.jar,
  lib/java_uno.jar,
@@ -30,4 +29,3 @@ Bundle-ClassPath: .,
  rsc/
 Eclipse-LazyStart: true
 Bundle-Activator: ag.ion.bion.workbench.office.editor.core.EditorCorePlugin
-Eclipse-PlatformFilter:  (& (osgi.os=win32) (osgi.arch=x86))

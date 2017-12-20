@@ -6,7 +6,7 @@
       provider-name="elexis.info">
 
    <description>
-      Ein TextPlugin für Elexis und MsWor 
+      Ein TextPlugin für Elexis und MsWord. Im Moment wird wahrscheinlich nur eine 32-bit Version laufen
    </description>
 
    <copyright url="http://elexis.info/de_contributers.html">
@@ -25,7 +25,6 @@
          download-size="0"
          install-size="0"
          version="0.0.0"/>
-
    <plugin
          id="com.lowagie.itext"
          download-size="0"
