@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="com.jsigle.msword_js.feature"
-      label="OOWrapper updated with noa-libre and improved by Joerg Sigle"
+      label="MS-Word Plugin by Joerg Sigle"
       version="3.0.0.qualifier"
       provider-name="elexis.info">
 
@@ -10,7 +10,7 @@
    </description>
 
    <copyright url="http://elexis.info/de_contributers.html">
-     Gerry Weirich, 2007-2015 und viele andere
+      2015-2017 Jörg Sigle jsigle@jsigle.com
    </copyright>
 
    <license url="http://www.gnu.org/licenses/gpl-2.0.html">
@@ -25,6 +25,7 @@
          download-size="0"
          install-size="0"
          version="0.0.0"/>
+
    <plugin
          id="com.lowagie.itext"
          download-size="0"
