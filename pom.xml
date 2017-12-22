@@ -193,14 +193,6 @@ Without it Maven would put two versions of each class file into the jars
       </plugin>
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-source-plugin</artifactId>
-        <version>${tycho-version}</version>
-        <configuration>
-          <strictSrcIncludes>false</strictSrcIncludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-p2-director-plugin</artifactId>
         <version>${tycho-version}</version>
       </plugin>
