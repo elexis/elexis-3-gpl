@@ -2,11 +2,13 @@
 <feature
       id="com.jsigle.msword_js.feature"
       label="MS-Word Plugin by Joerg Sigle"
-      version="3.0.0.qualifier"
+      version="3.5.0.qualifier"
       provider-name="elexis.info">
 
-   <description>
-      Ein TextPlugin für Elexis und MsWord. Im Moment wird wahrscheinlich nur eine 32-bit Version laufen
+   <description url="http://www.jsigle.com/prog/elexis/indexe.htm#msword_js">
+      Ein TextPlugin für Elexis und MsWord. Läuft nur unter Windows
+(32 und 64 bit).
+Mehr Informationen dazu findet man unter http://www.jsigle.com/prog/elexis/indexe.htm#msword_js
    </description>
 
    <copyright url="http://elexis.info/de_contributers.html">
@@ -20,8 +22,6 @@
    <plugin
          id="com.jsigle.msword_js"
          os="win32"
-         ws="win32"
-         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -31,6 +31,26 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.jsigle.msword_js.native32"
+         os="win32"
+         arch="x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="com.jsigle.msword_js.native64"
+         os="win32"
+         arch="x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
          unpack="false"/>
 
 </feature>
