@@ -2,12 +2,13 @@
 <feature
       id="com.jsigle.noatext_jsl.feature"
       label="OOWrapper updated with noa-libre and improved by Joerg Sigle"
-      version="3.0.0.qualifier"
+      version="3.5.0.qualifier"
       provider-name="elexis.info">
 
-   <description>
-      Ein TextPlugin für Elexis, aktualisiert auf Basis von noa-libre, mit verbesserter Stabilität.
-      Mehr Informationen dazu findet man unter http://www.jsigle.com/prog/elexis#NOAText_jsl
+   <description url="http://www.jsigle.com/prog/elexis/indexe.htm#NOAText_jsl">
+      Ein TextPlugin für Elexis, aktualisiert auf Basis von noa-libre,
+mit verbesserter Stabilität.
+Mehr Informationen dazu findet man unter http://www.jsigle.com/prog/elexis#NOAText_jsl
    </description>
 
    <copyright url="http://elexis.info/de_contributers.html">
@@ -24,7 +25,6 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
 
    <plugin
          id="com.lowagie.itext"
