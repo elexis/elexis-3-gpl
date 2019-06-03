@@ -11,3 +11,11 @@ in a dropins subdirectory. Therefore (Med-)Elexis users just download the featur
 under https://download.elexis.info/elexis.3.gpl/, place them in their (Med-)Elexis application folder into a
 (newly created) subdirectory called dropins.
 
+### Build from source
+
+
+You will need java8 and maven >= 3.3
+
+     git clone https://github.com/elexis/elexis-3-gpl
+     cd elexis-3-gpl
+     mvn -V clean verify -Dtycho.localArtifacts=ignore -Pall-archs
