@@ -3,16 +3,16 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ch.elexis.gpl</groupId>
   <artifactId>elexis-3-gpl</artifactId>
-  <version>3.5.0-SNAPSHOT</version>
+  <version>3.8.0-SNAPSHOT</version>
   <properties>
-    <tycho-version>1.4.0</tycho-version>
+    <tycho-version>1.6.0</tycho-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tycho-extras.version>${tycho-version}</tycho-extras.version>
     <juno-repo.url>http://download.eclipse.org/releases/juno</juno-repo.url>
     <tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
     <repo_name>elexis.3.gpl</repo_name>
-    <git.core.branch>master</git.core.branch>
-    <git.target.branch>master</git.target.branch>
+    <git.core.branch>3.8</git.core.branch>
+    <git.target.branch>${git.core.branch}</git.target.branch>
     <ROOT>${project.basedir}/compositeRepository</ROOT>
   </properties>
   <packaging>pom</packaging>
@@ -28,12 +28,12 @@
 <repositories>
   <repository>
     <id>elexis.3.target</id>
-    <url>http://download.elexis.info/elexis/${git.target.branch}/p2/target</url>
+    <url>https://download.elexis.info/elexis/${git.target.branch}/p2/target</url>
     <layout>p2</layout>
   </repository>
    <repository>
     <id>elexis.3.core</id>
-    <url>http://download.elexis.info/elexis/${git.core.branch}/p2/elexis-3-core</url>
+    <url>https://download.elexis.info/elexis/${git.core.branch}/p2/elexis-3-core</url>
     <layout>p2</layout>
   </repository>
 </repositories>
