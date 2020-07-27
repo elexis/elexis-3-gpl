@@ -173,11 +173,14 @@ package com.jsigle.msword_js;
 
 import java.awt.Frame;
 import java.io.BufferedInputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
@@ -188,35 +191,69 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.osgi.framework.Bundle;
 
+import ag.ion.bion.officelayer.application.IOfficeApplication;
+import ag.ion.bion.officelayer.application.OfficeApplicationException;
+import ag.ion.bion.officelayer.document.DocumentDescriptor;
+import ag.ion.bion.officelayer.document.DocumentException;
+import ag.ion.bion.officelayer.event.ICloseEvent;
+import ag.ion.bion.officelayer.event.ICloseListener;
+import ag.ion.bion.officelayer.event.IEvent;
+import ag.ion.bion.officelayer.form.IFormComponent;
+import ag.ion.bion.officelayer.form.IFormService;
+import ag.ion.bion.officelayer.text.ITextDocument;
+import ag.ion.bion.officelayer.text.ITextRange;
+import ag.ion.bion.officelayer.text.ITextTable;
+import ag.ion.bion.officelayer.text.table.ITextTablePropertyStore;
+import ag.ion.bion.workbench.office.editor.core.EditorCorePlugin;
+import ag.ion.noa.NOAException;
+import ag.ion.noa.search.ISearchResult;
+import ag.ion.noa.search.SearchDescriptor;
+import ag.ion.noa4e.ui.widgets.OfficePanel;
+
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComException;
 import com.jacob.com.Dispatch;
 import com.jacob.com.DispatchEvents;
 import com.jacob.com.Variant;
+
+import com.sun.star.awt.FontWeight;
+import com.sun.star.awt.Size;
+import com.sun.star.awt.XTextComponent;
+import com.sun.star.beans.PropertyValue;
 import com.sun.star.beans.PropertyVetoException;
 import com.sun.star.beans.UnknownPropertyException;
 import com.sun.star.beans.XPropertySet;
 import com.sun.star.beans.XPropertySetInfo;
+import com.sun.star.drawing.XShape;
+import com.sun.star.form.FormComponentType;
 import com.sun.star.lang.IllegalArgumentException;
 import com.sun.star.lang.WrappedTargetException;
+import com.sun.star.style.ParagraphAdjust;
+import com.sun.star.text.HoriOrientation;
+import com.sun.star.text.RelOrientation;
+import com.sun.star.text.TextContentAnchorType;
+import com.sun.star.text.VertOrientation;
+import com.sun.star.text.XText;
 import com.sun.star.text.XTextCursor;
+import com.sun.star.text.XTextDocument;
+import com.sun.star.text.XTextFrame;
 import com.sun.star.uno.UnoRuntime;
+import com.sun.star.view.PrintableState;
+import com.sun.star.view.XPrintable;
 
-import ag.ion.bion.officelayer.application.IOfficeApplication;
-import ag.ion.bion.officelayer.document.DocumentException;
-import ag.ion.bion.officelayer.event.ICloseEvent;
-import ag.ion.bion.officelayer.event.ICloseListener;
-import ag.ion.bion.officelayer.event.IEvent;
-import ag.ion.bion.officelayer.text.ITextDocument;
-import ag.ion.bion.workbench.office.editor.core.EditorCorePlugin;
-import ag.ion.noa4e.ui.widgets.OfficePanel;
-import ch.elexis.core.data.interfaces.text.ReplaceCallback;
+import com.jsigle.msword_js.MSWord_jsPrinter;
+import com.jsigle.msword_js.MSWord_jsPrinter.MyXPrintJobListener;
+import com.jsigle.msword_js.MSWord_jsText;
+import com.jsigle.msword_js.MSWord_jsText.closeListener;
+
 import ch.elexis.core.ui.text.ITextPlugin;
 import ch.elexis.core.ui.util.SWTHelper;
 import ch.rgw.io.FileTool;
 import ch.rgw.tools.ExHandler;
 import ch.rgw.tools.Log;
 import ch.rgw.tools.StringTool;
+import ch.rgw.tools.TimeTool;
+import ch.elexis.core.data.interfaces.text.ReplaceCallback;
 /**
  * Submitted to the Jacob SourceForge web site as a sample 3/2005
  * <p>
@@ -3016,8 +3053,7 @@ END OF TESTCODE FOR INSERTING TEXTFRAME SHAPES*/
 	 */
 	public byte[] storeToByteArray(){
 		System.out.println("MSWord_jsText: storeToByteArray begins");
-		File tmpFile4save = null;
-		byte[] ret = null;
+		
 		//if (agIonDoc == null) {
 		if (jacobDocument == null) {
 			System.out.println("MSWord_jsText: storeToByteArray: WARNING: jacobDocument IS NULL!");
@@ -3037,8 +3073,7 @@ END OF TESTCODE FOR INSERTING TEXTFRAME SHAPES*/
 			*/
 			
 			String myFilename=myFile.getAbsolutePath();
-			tmpFile4save = File.createTempFile("msword_js", ".doc");
-			myFilename = tmpFile4save.getAbsolutePath();
+			
 			System.out.println("MSWord_jsText: storeToByteArray(): Trying to save the jacobDocument: "+myFilename+" from jacobDocument...");
 			
 			/*
@@ -3053,14 +3088,12 @@ END OF TESTCODE FOR INSERTING TEXTFRAME SHAPES*/
 			
 			//THIS WORKS
 			System.out.println("MSWord_jsText: storeToByteArray(): About to Dispatch.call( (Dispatch) Dispatch.call(jacobObjWord, \"WordBasic\").getDispatch(),\"FileSaveAs\", myFilename);");
-			System.out.println("MSWord_jsText: storeToByteArray: Before saving myFile.length == " + myFile.length());
-			Dispatch.call((Dispatch) Dispatch.call(jacobObjWord, "WordBasic").getDispatch(), "FileSave");
 			Dispatch.call( (Dispatch) Dispatch.call(jacobObjWord, "WordBasic").getDispatch(),"FileSaveAs", myFilename); 
 
 			System.out.println("MSWord_jsText: storeToByteArray: Now re-loading file content from "+myFilename+" into byte[] ret...");
 			System.out.println("MSWord_jsText: storeToByteArray: BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile));");
 			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile));
-			ret = new byte[(int) myFile.length()];
+			byte[] ret = new byte[(int) myFile.length()];
 			System.out.println("MSWord_jsText: storeToByteArray: Reading begins. myFile.length == "+myFile.length());
 			int pos = 0, len = 0;
 			System.out.println("MSWord_jsText: storeToByteArray: about to read file via while (pos + len = bis.read(ret)) != ret.legnth) {}...");
@@ -3071,19 +3104,12 @@ END OF TESTCODE FOR INSERTING TEXTFRAME SHAPES*/
 			
 			
 			System.out.println("MSWord_jsText: storeToByteArray: about to end, returning byte[] ret... (to Elexis.TextView.java for storage as BLOB in DBMS)");
-			try {
-				Dispatch.call(jacobDocument, "Close");
-			} catch (Exception ex) {
-				System.out.println("Ignoring exception on close" + ex.getMessage());
-			}
+			return ret;
 		} catch (Exception ex) {
 			ExHandler.handle(ex);
 			System.out.println("MSWord_jsText: storeToByteArray: Exception caught. About to return null");
+			return null;
 		}
-		if (tmpFile4save != null) {
-			tmpFile4save.delete();
-		}
-		return ret;
 	}
 	
 	
