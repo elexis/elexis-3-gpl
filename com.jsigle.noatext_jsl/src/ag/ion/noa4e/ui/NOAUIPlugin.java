@@ -91,7 +91,6 @@ import ag.ion.bion.officelayer.application.ILazyApplicationInfo;
 import ag.ion.bion.officelayer.application.IOfficeApplication;
 import ag.ion.bion.officelayer.application.OfficeApplicationException;
 import ag.ion.noa4e.internal.ui.preferences.LocalOfficeApplicationPreferencesPage;
-import ag.ion.noa4e.internal.ui.preferences.LocalOfficeApplicationPreferencesPage;
 import ag.ion.noa4e.ui.operations.ActivateOfficeApplicationOperation;
 import ag.ion.noa4e.ui.operations.FindApplicationInfosOperation;
 import ag.ion.noa4e.ui.wizards.application.LocalApplicationWizard;
@@ -277,7 +276,7 @@ public class NOAUIPlugin extends AbstractUIPlugin {
 	  if (status==null)	System.out.println("NOAUIPlugin: startLocalOfficeApplication(2): status==null");
 	  else				System.out.println("NOAUIPlugin: startLocalOfficeApplication(2): status="+status.toString());
 		
-	  if (status.getSeverity() == IStatus.ERROR) {  
+	  if (status != null && status.getSeverity() == IStatus.ERROR) {  
     	System.out.println("NOAUIPlugin: startLocalOfficeApplication(2): WARNING: status.getSeverity()==IStatus.ERROR");
   		
         if (MessageDialog.openQuestion(shell,
@@ -411,7 +410,7 @@ public class NOAUIPlugin extends AbstractUIPlugin {
     if (officeHome==null)	System.out.println("NOAUIPlugin: internalStartApplication(): WARNING: officeHome==null");
     else					System.out.println("NOAUIPlugin: internalStartApplication(): officeHome="+officeHome);
     
-    if (officeHome.length() != 0) {
+    if (officeHome != null && officeHome.length() != 0) {
       File file = new File(officeHome);
       if (file.canRead()) {
     

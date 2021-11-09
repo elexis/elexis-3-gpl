@@ -346,10 +346,10 @@ public class LoadDocumentOperation implements IRunnableWithProgress {
 
 						IDocumentService documentService = officeApplication.getDocumentService();
 						if (documentService == null)	System.out.println("LoadDocumentOperation: officeApplication.getDocumentService()==null");
-						else							System.out.println("LoadDocumentOperation: officeApplication.getDocumentService()="
+						else {						System.out.println("LoadDocumentOperation: officeApplication.getDocumentService()="
 																			+ officeApplication.getDocumentService());
 						document = documentService.loadDocument(frame, url.toString(), documentDescriptor);
-
+						}
 						System.out.println("LoadDocumentOperation: POST");
 
 						// Das folgende (showElement zumindest) wirkt von weiter
@@ -784,7 +784,7 @@ public class LoadDocumentOperation implements IRunnableWithProgress {
 				System.out.println("WARNING: appear with LibreOffice in its desired frame, and even the problematic floating dialog windows");
 				System.out.println("WARNING: in addition to that - for either the table properties, or the externally opened F11 Formatvorlagen.");
 				System.out.println("WARNING: 201202252133js");
-				internalThread.destroy();	//this makes progressMonitor detect the end of the thread at least,
+				// internalThread.destroy();	//this makes progressMonitor detect the end of the thread at least,
 											//but it is deprecated and very error prone. So this should NOT be used except for debugging.
 				//internalThread.stop();	//this does not stop progressMonitor from cycling on and on.
 				Thread.sleep(500);			//Nach dem destroy des anderen Threads lasse ich hier noch eine halbe Sekunde Zeit.

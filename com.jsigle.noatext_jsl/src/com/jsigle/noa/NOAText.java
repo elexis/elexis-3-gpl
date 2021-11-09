@@ -360,7 +360,7 @@ public class NOAText implements ITextPlugin {
 			
 			Path path = new Path("rsc/empty.odt");
 			
-			System.out.println("NOAText: createEmptyDocument(): Copying internal ressource "+bundle.toString()+" "+path+" to new FileOutputStream...");
+			System.out.println("NOAText: createEmptyDocument(): Copying internal ressource to new FileOutputStream...");
 
 			InputStream is = FileLocator.openStream(bundle, path, false);
 			FileOutputStream fos = new FileOutputStream(myFile);
@@ -635,8 +635,10 @@ public class NOAText implements ITextPlugin {
 					// if ComboBox or ListBox, then set list items if specified
 					if ((componentType == FormComponentType.COMBOBOX) || (componentType == FormComponentType.LISTBOX))	{
 						// *** if delimited by returns (coming from SQL-Select)
-						replacement2 = replacement2.replaceAll("\\n", ";");
-						if (replacement2 != null) xPSet.setPropertyValue("StringItemList",  replacement2.split(";"));
+						if (replacement2 != null) {
+							replacement2 = replacement2.replaceAll("\\n", ";");
+							 xPSet.setPropertyValue("StringItemList",  replacement2.split(";"));
+						}
 					}
 					
 					switch (componentType)	{
@@ -713,18 +715,21 @@ public class NOAText implements ITextPlugin {
 							break;
 						case (FormComponentType.LISTBOX):
 							// *** if delimited by returns (coming from SQL-Select)
-							replacement1 = replacement1.replaceAll("\\n", ";");
-							// *** create short[] from replacement1
-							String[] splittedArgs = replacement1.split(";");
-							short[] shortList = new short[splittedArgs.length];
-							for (int argsi = 0; argsi < splittedArgs.length; argsi++)	{
-								String argStr = splittedArgs[argsi];
-								if (isInteger(argStr))	{
-									short arg = (short) Integer.parseInt(argStr);
-									shortList[argsi] = arg;
+							if (replacement1 != null) {
+								replacement1 = replacement1.replaceAll("\\n", ";");
+								// *** create short[] from replacement1
+								String[] splittedArgs = replacement1.split(";");
+								short[] shortList = new short[splittedArgs.length];
+								for (int argsi = 0; argsi < splittedArgs.length; argsi++) {
+									String argStr = splittedArgs[argsi];
+									if (isInteger(argStr)) {
+										short arg = (short) Integer.parseInt(argStr);
+										shortList[argsi] = arg;
+									}
 								}
+								if (replacement1 != null)
+									xPSet.setPropertyValue("SelectedItems", shortList);
 							}
-							if (replacement1 != null) xPSet.setPropertyValue("SelectedItems", shortList);
 							break;
 						case (FormComponentType.SPINBUTTON):
 							if (isInteger(replacement3)) xPSet.setPropertyValue("SpinValueMax",  new Short((short) Integer.parseInt(replacement3)));

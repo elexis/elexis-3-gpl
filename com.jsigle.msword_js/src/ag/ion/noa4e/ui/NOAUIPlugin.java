@@ -234,7 +234,7 @@ public class NOAUIPlugin extends AbstractUIPlugin {
 	  if (status==null)	System.out.println("NOAUIPlugin: startLocalOfficeApplication(): status==null");
 	  else				System.out.println("NOAUIPlugin: startLocalOfficeApplication(): status="+status.toString());
 		
-	  if (status.getSeverity() == IStatus.ERROR) {  
+	  if (status != null && status.getSeverity() == IStatus.ERROR) {  
     	System.out.println("NOAUIPlugin: startLocalOfficeApplication(): WARNING: status.getSeverity()==IStatus.ERROR");
   		
         if (MessageDialog.openQuestion(shell,
@@ -364,7 +364,7 @@ public class NOAUIPlugin extends AbstractUIPlugin {
     if (officeHome==null)	System.out.println("NOAUIPlugin: internalStartApplication(): WARNING: officeHome==null");
     else					System.out.println("NOAUIPlugin: internalStartApplication(): officeHome="+officeHome);
     
-    if (officeHome.length() != 0) {
+    if (officeHome != null && officeHome.length() != 0) {
       File file = new File(officeHome);
       if (file.canRead()) {
         configuration.put(IOfficeApplication.APPLICATION_HOME_KEY, officeHome);

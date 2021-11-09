@@ -7,7 +7,8 @@ Bundle-Vendor: jsigle.com
 Bundle-Localization: plugin
 Require-Bundle: ch.rgw.utility;bundle-version="3.9.100",
  ch.elexis.core;bundle-version="3.9.0",
- ch.elexis.core.ui;bundle-version="3.9.0"
+ ch.elexis.core.ui;bundle-version="3.9.0",
+ ch.elexis.core.data
 Bundle-ClassPath: .,
  lib/jurt.jar,
  lib/officebean.jar,
@@ -25,3 +26,4 @@ Bundle-ClassPath: .,
 Eclipse-LazyStart: true
 Bundle-Activator: ag.ion.bion.workbench.office.editor.core.EditorCorePlugin
 Bundle-RequiredExecutionEnvironment: JavaSE-11
+Import-Package: ch.elexis.core.data.activator

@@ -416,7 +416,10 @@ public class LoadDocumentOperation implements IRunnableWithProgress {
 
 						IDocumentService documentService = officeApplication.getDocumentService();
 						
-						if (documentService == null)	System.out.println("LoadDocumentOperation: InternalThread: run: documentService()==null");
+						if (documentService == null) {
+							System.out.println("LoadDocumentOperation: InternalThread: run: documentService()==null");
+							return;
+						}
 						else							System.out.println("LoadDocumentOperation: InternalThread: run: documentService()="+ documentService.toString());
 						
 						System.out.println("LoadDocumentOperation: InternalThread: run: documentService.MAX_OPENED_DOCS:           "+documentService.MAX_OPENED_DOCS);
