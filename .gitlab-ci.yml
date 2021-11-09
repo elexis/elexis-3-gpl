@@ -8,7 +8,7 @@ build:
   - xvfb-run mvn clean verify -Dgit.core.branch=$CI_COMMIT_REF_NAME -Dtycho.localArtifacts=ignore -Pall-archs
   - eval $(ssh-agent -s)
   - ssh-add <(echo "$SSH_PRIVATE_KEY_ED25519_BASE64" | base64 -d)
-  - rsync -aiv --delete --mkpath -e ssh ch.elexis.gpl.p2site/target/repository/ deploy@download.medelexis.ch:download.elexis.info/elexis/$CI_COMMIT_REF_NAME/p2/elexis.3.gpl/
+  - rsync -aiv --delete -e ssh ch.elexis.gpl.p2site/target/repository/ deploy@download.medelexis.ch:download.elexis.info/elexis/$CI_COMMIT_REF_NAME/p2/elexis.3.gpl/
   - eval $(ssh-agent -k) 
   only:
   - master@elexis/elexis-3-gpl
