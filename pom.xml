@@ -5,7 +5,9 @@
   <artifactId>elexis-3-gpl</artifactId>
   <version>3.9.0-SNAPSHOT</version>
   <properties>
-    <tycho-version>1.6.0</tycho-version>
+    <elexis.target>2021-09-java11</elexis.target>
+
+    <tycho-version>2.5.0</tycho-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tycho-extras.version>${tycho-version}</tycho-extras.version>
     <juno-repo.url>https://download.eclipse.org/releases/juno</juno-repo.url>
@@ -18,7 +20,6 @@
   <packaging>pom</packaging>
   <modules>
     <module>com.jsigle.msword_js</module>
-    <module>com.jsigle.msword_js.native32</module>
     <module>com.jsigle.msword_js.native64</module>
     <module>com.jsigle.noatext_jsl</module>
     <module>com.jsigle.noatext_jsl.feature</module>
@@ -28,7 +29,7 @@
 <repositories>
   <repository>
     <id>elexis.3.target</id>
-    <url>https://download.elexis.info/elexis/${git.target.branch}/p2/target</url>
+    <url>https://download.elexis.info/elexis/target/${elexis.target}</url>
     <layout>p2</layout>
   </repository>
    <repository>
@@ -38,34 +39,6 @@
   </repository>
 </repositories>
   <profiles>
-    <profile>
-      <id>windows-x86</id>
-      <activation>
-        <os>
-          <family>windows</family>
-          <arch>x86</arch>
-        </os>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.tycho</groupId>
-            <artifactId>target-platform-configuration</artifactId>
-            <version>${tycho-version}</version>
-            <configuration>
-              <pomDependencies>consider</pomDependencies>
-              <environments>
-                <environment>
-                  <os>win32</os>
-                  <ws>win32</ws>
-                  <arch>x86</arch>
-                </environment>
-              </environments>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
     <profile>
       <id>windows-x86_64</id>
       <activation>
@@ -109,41 +82,13 @@
             <artifactId>target-platform-configuration</artifactId>
             <version>${tycho-version}</version>
             <configuration>
-              <executionEnvironment>JavaSE-1.8</executionEnvironment>
+              <executionEnvironment>JavaSE-11</executionEnvironment>
               <pomDependencies>consider</pomDependencies>
               <environments>
                 <environment>
                   <os>linux</os>
                   <ws>gtk</ws>
                   <arch>x86_64</arch>
-                </environment>
-              </environments>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>linux-x86</id>
-      <activation>
-        <os>
-          <name>Linux</name>
-          <arch>x86</arch>
-        </os>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.tycho</groupId>
-            <artifactId>target-platform-configuration</artifactId>
-            <version>${tycho-version}</version>
-            <configuration>
-              <pomDependencies>consider</pomDependencies>
-              <environments>
-                <environment>
-                  <os>linux</os>
-                  <ws>gtk</ws>
-                  <arch>x86</arch>
                 </environment>
               </environments>
             </configuration>
@@ -165,6 +110,7 @@
             <artifactId>target-platform-configuration</artifactId>
             <version>${tycho-version}</version>
             <configuration>
+              <executionEnvironment>JavaSE-11</executionEnvironment>
               <pomDependencies>consider</pomDependencies>
               <environments>
                 <environment>
@@ -195,17 +141,7 @@
                 <environment>
                   <os>linux</os>
                   <ws>gtk</ws>
-                  <arch>x86</arch>
-                </environment>
-                <environment>
-                  <os>linux</os>
-                  <ws>gtk</ws>
                   <arch>x86_64</arch>
-                </environment>
-                <environment>
-                  <os>win32</os>
-                  <ws>win32</ws>
-                  <arch>x86</arch>
                 </environment>
                 <environment>
                   <os>win32</os>
@@ -250,35 +186,11 @@
       <groupId>org.eclipse.tycho</groupId>
       <artifactId>target-platform-configuration</artifactId>
       <configuration>
-        <dependency-resolution>
-          <extraRequirements>
-              <requirement>
-                <type>eclipse-plugin</type>
-                <id>javax.servlet</id>
-                <versionRange>0.0.0</versionRange>
-              </requirement>
-              <requirement>
-                <type>eclipse-plugin</type>
-                <id>javax.xml</id>
-                <versionRange>0.0.0</versionRange>
-              </requirement>
-          </extraRequirements>
-        </dependency-resolution>
         <environments>
           <environment>
             <os>linux</os>
             <ws>gtk</ws>
-            <arch>x86</arch>
-          </environment>
-          <environment>
-            <os>linux</os>
-            <ws>gtk</ws>
             <arch>x86_64</arch>
-          </environment>
-          <environment>
-            <os>win32</os>
-            <ws>win32</ws>
-            <arch>x86</arch>
           </environment>
           <environment>
             <os>win32</os>
@@ -301,26 +213,14 @@
         <artifactId>maven-compiler-plugin </artifactId>
         <version>3.1</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8 </target>
-          <compilerId>jdt</compilerId>
-          <compilerArgument>-err:nullAnnot,null </compilerArgument>
-          <!-- insert your warn/err configuration here -->
+          <release>11</release>
         </configuration>
-        <dependencies>
-          <!-- This dependency provides the implementation of compiler "jdt": -->
-          <dependency>
-            <groupId>org.eclipse.tycho</groupId>
-            <artifactId>tycho-compiler-jdt </artifactId>
-            <version>${tycho-version}</version>
-          </dependency>
-        </dependencies>
       </plugin>
       <plugin>
         <!-- we want to ensure that the bin directory created by the Eclipse gets cleaned, too.
 Without it Maven would put two versions of each class file into the jars
 -->
-        <artifactId>maven-clean-plugin </artifactId>
+        <artifactId>maven-clean-plugin</artifactId>
         <version>2.5</version>
         <configuration>
           <filesets>
@@ -340,7 +240,12 @@ Without it Maven would put two versions of each class file into the jars
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho-version}</version>
         <configuration>
-          <executionEnvironment>JavaSE-1.8</executionEnvironment>
+          <executionEnvironment>JavaSE-11</executionEnvironment>
+          <dependency-resolution>
+            <profileProperties>
+              <org.eclipse.justj.buildtime>true</org.eclipse.justj.buildtime>
+            </profileProperties>
+          </dependency-resolution>
         </configuration>
       </plugin>
       <plugin>
@@ -401,11 +306,6 @@ Without it Maven would put two versions of each class file into the jars
         <configuration>
           <baselineMode>warn</baselineMode>
           <baselineReplace>none</baselineReplace>
-          <baselineRepositories>
-            <repository>
-              <url>https://download.eclipse.org/eclipse/updates/3.8</url>
-            </repository>
-          </baselineRepositories>
         </configuration>
       </plugin>
       <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->

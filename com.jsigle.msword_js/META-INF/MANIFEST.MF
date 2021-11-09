@@ -29,3 +29,4 @@ Bundle-ClassPath: .,
 Eclipse-LazyStart: true
 Bundle-Activator: ag.ion.bion.workbench.office.editor.core.EditorCorePlugin
 Eclipse-PlatformFilter: (osgi.os=win32)
+Bundle-RequiredExecutionEnvironment: JavaSE-11
