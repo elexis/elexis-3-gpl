@@ -144,7 +144,7 @@ public class OOPrinter {
 			}
 			if(printJobEvent.State == PrintableState.JOB_SPOOLING_FAILED)
 			{
-				System.out.println("JOB_SPOOLING_FAILED");
+				System.out.println("JOB_SPOOLING_FAILED  ");
 				this.setStatus(PrintableState.JOB_SPOOLING_FAILED);
 				return;
 			}
